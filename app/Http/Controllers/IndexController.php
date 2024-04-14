@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
+use App\Models\MainMessage;
+use App\Models\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,11 +11,12 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $headMessage = Message::where('is_reply', 0)->first();
-        $responses = Message::where('parent_message_id', $headMessage->id)->get();
+        $mainMessage = MainMessage::all();
+        $responses = Response::getResponses();
+
 
         return view('index', [
-            'headMessage' => $headMessage,
+            'mainMessage' => $mainMessage,
             'responses' => $responses,
         ] );
     }

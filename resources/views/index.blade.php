@@ -5,20 +5,48 @@
 @section('content')
 
     <div class="container">
-        <div class="container mt-5">
+        <div class="container mt-5 w-75">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Head Message</h5>
                 </div>
+                @foreach($mainMessage as $main)
                 <div class="card-body">
-                    <p>User Name: {{ $headMessage->user_name }}</p>
-                    <p>Email: {{ $headMessage->email }}</p>
-                    <p>URL: {{ $headMessage->url }}</p>
-                    <p>Text: {{ $headMessage->text }}</p>
-                    <p>Date Added: {{ $headMessage->date_add }}</p>
-                    <p>Status: {{ $headMessage->status == 1 ? 'Main Message' : 'Reply' }}</p>
+                    <p>User Name: {{ $main->user_name }}</p>
+                    <p>Email: {{ $main->email }}</p>
+                    <p>URL: {{ $main->url }}</p>
+                    <p>Text: {{ $main->text }}</p>
+                    <p>Date Added: {{ $main->created_at }}</p>
                 </div>
+                @if(!empty($responses))
+                    @foreach($responses as $item)
+                        <div style="margin-left: 20px;" class="card">
+                            <div class="card-body" style="margin-left: 20px;">
+                                <p>User Name: {{ $item->user_name }}</p>
+                                <p>Email: {{ $item->email }}</p>
+                                <p>URL: {{ $item->url }}</p>
+                                <p>Text: {{ $item->text }}</p>
+                                <p>Date Added: {{ $item->created_at }}</p>
+                                @if(!empty($item->level))
+                                    @php
+                                        $responseUser = $responses->firstWhere('id', $item->level);
+                                    @endphp
+                                        <p>Ответ для: {{ $responseUser->user_name }}</p>
+                                @else
+                                    <p>Ответ для: {{ $item->name }}</p>
+                                @endif
+
+
+
+                            </div>
+                        </div>
+                    @endforeach
+                    @endif
+                @endforeach
             </div>
+
+
+
         </div>
         <h1>Форма добавления записи</h1>
             <form action="submit" method="POST">

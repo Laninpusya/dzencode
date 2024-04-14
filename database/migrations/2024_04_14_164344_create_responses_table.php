@@ -11,15 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('responses', function (Blueprint $table) {
             $table->id();
             $table->string('user_name');
             $table->string('email');
             $table->string('url')->nullable();
             $table->text('text');
-            $table->boolean('is_reply')->default(0);
+//            $table->integer('level')->default(0);
+            $table->unsignedBigInteger('level')->nullable();
+            $table->foreign('level')->references('id')->on('responses')->onDelete('cascade');
+
             $table->unsignedBigInteger('parent_message_id')->nullable();
-            $table->foreign('parent_message_id')->references('id')->on('messages')->onDelete('cascade');
+            $table->foreign('parent_message_id')->references('id')->on('main_messages')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('responses');
     }
 };

@@ -17,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
+Route::post('submit_massage/',[App\Http\Controllers\IndexController::class, 'submit_massage'])->name('submit_massage');
+
 

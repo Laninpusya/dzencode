@@ -5,11 +5,23 @@
 @section('content')
 
     <div class="container">
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="container mt-5 w-75">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Head Message</h5>
                 </div>
+                <form action="{{route('submit_massage')}}" method="POST">
+                    @csrf
                 @foreach($mainMessage as $main)
                 <div class="card-body">
                     <p>User Name: {{ $main->user_name }}</p>
@@ -17,9 +29,13 @@
                     <p>URL: {{ $main->url }}</p>
                     <p>Text: {{ $main->text }}</p>
                     <p>Date Added: {{ $main->created_at }}</p>
+                    <br>
+                    <input type="radio" id="item" name="parent_message_id" value="{{ $main->id }}">
+                    <label for="item_{{ $main->id }}">Ответить {{ $main->user_name }}</label><br>
+
                 </div>
                 @if(!empty($responses))
-                    @foreach($responses as $item)
+                    @foreach($responses->where('parent_message_id', $main->id) as $item)
                         <div style="margin-left: 20px;" class="card">
                             <div class="card-body" style="margin-left: 20px;">
                                 <p>User Name: {{ $item->user_name }}</p>
@@ -31,13 +47,12 @@
                                     @php
                                         $responseUser = $responses->firstWhere('id', $item->level);
                                     @endphp
+                                    @if(!empty($responseUser))
                                         <p>Ответ для: {{ $responseUser->user_name }}</p>
+                                    @endif
                                 @else
                                     <p>Ответ для: {{ $item->name }}</p>
                                 @endif
-
-
-
                             </div>
                         </div>
                     @endforeach
@@ -45,12 +60,10 @@
                 @endforeach
             </div>
 
-
-
         </div>
         <h1>Форма добавления записи</h1>
-            <form action="submit" method="POST">
-                @csrf
+
+
                 <div style="position: absolute; top: 10px; right: 10px;">
                 <div class="form-group">
                     <label for="username">User Name:</label>
@@ -58,11 +71,11 @@
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail:</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="text" class="form-control" id="email" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="homepage">Home page:</label>
-                    <input type="url" class="form-control" id="homepage" name="homepage">
+                    <input type="text" class="form-control" id="homepage" name="url">
                 </div>
                 </div>
                 <div>

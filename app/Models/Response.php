@@ -20,10 +20,15 @@ class Response extends Model
     }
     public static function getResponses()
     {
-        return DB::table('responses')
-            ->join('main_messages', 'responses.parent_message_id', '=', 'main_messages.id')
-            ->select('responses.text', 'responses.level', 'responses.email', 'responses.id', 'responses.user_name', 'responses.url', 'responses.created_at', 'responses.parent_message_id', 'main_messages.user_name as name')
+//        return DB::table('responses')
+//            ->join('main_messages', 'responses.parent_message_id', '=', 'main_messages.id')
+//            ->where('main_messages.id', '=', 'responses.parent_message_id')
+//            ->select('responses.text', 'responses.level', 'responses.email', 'responses.id', 'responses.user_name', 'responses.url', 'responses.created_at', 'responses.parent_message_id', 'main_messages.user_name as name')
+//            ->get();
+        return Response::with('mainMessage')
+            ->select('text', 'level', 'email', 'id', 'user_name', 'url', 'created_at', 'parent_message_id')
             ->get();
+
     }
 
     /**

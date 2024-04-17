@@ -22,10 +22,29 @@ class IndexController extends Controller
             'responses' => $responses,
         ] );
     }
+    public function single($id){
+
+        $mainMessage = MainMessage::where('id', $id)->first();
+        $responses = Response::getResponses();
+        return view('page', [
+            'mainMessage' => $mainMessage,
+            'responses' => $responses,
+            ]);
+    }
+
+
+
+
+
+
+
+
+
 
     public function submit_massage(Request $request)
     {
-        dd($request);
+
+//        dd($request);
         $validatedData = $request->validate([
             'user_name' => 'required',
             'email' => 'required',
@@ -36,7 +55,7 @@ class IndexController extends Controller
         DB::beginTransaction();
 
         try {
-            $massage = DB::table('responses')->insertGetId([
+            DB::table('responses')->insertGetId([
                 'user_name' => $validatedData['user_name'],
                 'email' => $validatedData['email'],
                 'text' => $validatedData['text'],
@@ -48,10 +67,10 @@ class IndexController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('index')->with('error', 'Произошла ошибка при добавлении комментария');
+            return redirect()->back()->with('error', 'Произошла ошибка при добавлении комментария');
         }
 
-        return redirect()->route('index')->with('success', 'Комментарий добавлен');
+        return redirect()->back()->with('success', 'Комментарий добавлен');
     }
 
 }

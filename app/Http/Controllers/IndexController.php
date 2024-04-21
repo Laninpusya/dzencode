@@ -32,19 +32,8 @@ class IndexController extends Controller
             ]);
     }
 
-
-
-
-
-
-
-
-
-
-    public function submit_massage(Request $request)
+    public function save(Request $request)
     {
-
-//        dd($request);
         $validatedData = $request->validate([
             'user_name' => 'required',
             'email' => 'required',

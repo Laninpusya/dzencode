@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //});
 Route::get('single/{id}', [App\Http\Controllers\IndexController::class, 'single'])->name('single');
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
-Route::post('submit_massage/',[App\Http\Controllers\IndexController::class, 'submit_massage'])->name('submit_massage');
+Route::post('save/',[App\Http\Controllers\IndexController::class, 'save'])->name('save');
 
 
 

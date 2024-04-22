@@ -19,46 +19,47 @@
         a {
             outline: none;
             border: none;
-            color: black;
-            background: white;
+            color: #4abdc0;
+            /*background: white;*/
         }
 
         a:link {
             outline: none;
-            color: black;
+            color: #4abdc0;
             border: none;
-            background: white;
+            /*background: white;*/
         }
 
         a:visited {
             outline: none;
-            color: black;
+            color: #4abdc0;
             border: none;
-            background: white;
+            /*background: white;*/
         }
 
-        a:focus {
-            outline: none;
-            color: black;
-            border: none;
-            background: white;
-        }
+        /*a:focus {*/
+        /*    outline: none;*/
+        /*    color: black;*/
+        /*    border: none;*/
+        /*    background: white;*/
+        /*}*/
 
         a:hover {
             outline: none;
             color: black;
-            border: 1px solid;
-            border-radius: 10px;
-            background: white;
+
+            /*border: 1px solid;*/
+            /*border-radius: 10px;*/
+            /*background: white;*/
             text-decoration: none;
         }
 
-        a:active {
-            outline: none;
-            color: black;
-            border: none;
-            background: white;
-        }
+        /*a:active {*/
+        /*    outline: none;*/
+        /*    color: black;*/
+        /*    border: none;*/
+        /*    background: white;*/
+        /*}*/
 
     </style>
 </head>
@@ -68,8 +69,26 @@
     @yield('content')
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
+
     $(document).ready(function() {
+        // смена сортировки для даты
+        var firstLink = $('th a:first-child'); // первая скрытая ссылка
+        var secondLink = $('th a:last-child'); // вторая скрытая ссылка
+        var isFirstClicked = false; // флаг для отслеживания первого клика
+
+        $('#switch').on('click', function () {
+            if (!isFirstClicked) {
+                firstLink.trigger('click'); // эмулируем клик на первую ссылку
+                isFirstClicked = true; // устанавливаем флаг в true
+            } else {
+                secondLink.trigger('click'); // эмулируем клик на вторую ссылку
+                isFirstClicked = false; // сбрасываем флаг в false
+            }
+        });
+        //синяя рамка вокруг активной радио-кнопки
         $('.card').click(function() {
             const cardId = $(this).attr('id');
             const radioId = 'radio_' + cardId.split('_')[1];
@@ -89,9 +108,8 @@
                 card.removeClass('border border-primary');
             }
         });
+
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

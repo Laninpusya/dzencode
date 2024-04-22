@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('single/{id}', [App\Http\Controllers\IndexController::class, 'single'])->name('single');
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 Route::post('save/',[App\Http\Controllers\IndexController::class, 'save'])->name('save');
+Route::get('/sort', [App\Http\Controllers\SortController::class, 'sort'])->name('sort');
+
+
 
 
 

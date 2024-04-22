@@ -27,7 +27,8 @@ class Response extends Model
 //            ->get();
         return Response::with('mainMessage')
             ->select('text', 'level', 'email', 'id', 'user_name', 'url', 'created_at', 'parent_message_id')
-            ->get();
+            ->orderBy('created_at', 'asc')
+            ->paginate(2);
 
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MainMessage extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_name', 'email', 'url', 'text'];
+    protected $fillable = ['user_name', 'email', 'url', 'text', 'created_at'];
 
     /**
      * Get the responses for the main message.

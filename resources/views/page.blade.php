@@ -1,3 +1,4 @@
+@php use App\Models\Response; @endphp
 @extends('layout')
 
 @section('title', 'massage')
@@ -18,6 +19,9 @@
         <form action="{{route('save')}}" method="POST">
             @csrf
             <div class="container mt-5 w-75">
+                <div class="mb-3">
+                    <a href="{{ route('index') }}" class="btn btn-primary">Back</a>
+                </div>
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Head Message</h5>
@@ -40,7 +44,9 @@
                                 <div class="card-body" style="margin-left: 20px;">
                                     <p>User Name: {{ $item->user_name }}</p>
                                     <p>Email: {{ $item->email }}</p>
+                                    @if(!empty($item->url))
                                     <p>URL: {{ $item->url }}</p>
+                                    @endif
                                     <p>Text: {{ $item->text }}</p>
                                     <p>Date Added: {{ $item->created_at }}</p>
                                     @if(!empty($item->level))
@@ -48,17 +54,20 @@
                                             $responseUser = $responses->firstWhere('id', $item->level);
                                         @endphp
                                         @if(!empty($responseUser))
-                                            <p>Ответ для: {{ $responseUser->user_name }}</p>
+                                            <p style="background-color: #84d8da">Ответ для: {{ $responseUser->user_name }}</p>
                                         @endif
                                     @else
-                                        <p>Ответ для: {{ $mainMessage->user_name }}</p>
+                                        <p style="background-color: #84d8da">Ответ для: {{ $mainMessage->user_name }}</p>
                                     @endif
                                     <input type="radio" id="radio_{{ $item->id }}" name="level" value="{{ $item->id }}">
                                     <label for="radio_{{ $item->id }}">Ответить {{ $item->user_name }}</label>
                                 </div>
                             </div>
                         @endforeach
+                            {{$responses->links()}}
+
                     @endif
+
                 </div>
             </div>
 

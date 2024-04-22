@@ -12,14 +12,14 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $mainMessage = MainMessage::all();
-        $responses = Response::getResponses();
+        $mainMessage = MainMessage::paginate(25);
+//        $responses = Response::getResponses();
 //        dd($responses);
 
 
         return view('index', [
             'mainMessage' => $mainMessage,
-            'responses' => $responses,
+//            'responses' => $responses,
         ] );
     }
     public function single($id){

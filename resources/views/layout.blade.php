@@ -12,6 +12,9 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfLILopAAAAAJgONSBVUhlAfevKdv-vN9HrAmW5"></script>
+    <script src="https://cdn.tiny.cloud/1/11w3esz6p6q80ht5oc48mdkuk86wavcben7aeejjm4s7w7sw/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <link href="/resources/css/colorbox.css" rel="stylesheet">
+
 
     <!-- Styles -->
     <style>
@@ -71,6 +74,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.colorbox.js"></script>
 <script>
 
     $(document).ready(function() {
@@ -110,6 +114,61 @@
         });
 
     });
+</script>
+{{--tinymce plugin--}}
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+        ],
+        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        file_picker_callback : elFinderBrowser,
+    });
+    // elfinder plugin
+    function elFinderBrowser (callback, value, meta) {
+        tinymce.activeEditor.windowManager.openUrl({
+            title: 'File Manager',
+            url: '/elfinder/tinymce5',
+            /**
+             * On message will be triggered by the child window
+             *
+             * @param dialogApi
+             * @param details
+             * @see https://www.tiny.cloud/docs/ui-components/urldialog/#configurationoptions
+             */
+            onMessage: function (dialogApi, details) {
+                if (details.mceAction === 'fileSelected') {
+                    const file = details.data.file;
+
+                    // Make file info
+                    const info = file.name;
+
+                    // Provide file and text for the link dialog
+                    if (meta.filetype === 'file') {
+                        callback(file.url, {text: info, title: info});
+                    }
+
+                    // Provide image and alt text for the image dialog
+                    if (meta.filetype === 'image') {
+                        callback(file.url, {alt: info});
+                    }
+
+                    // Provide alternative source and posted for the media dialog
+                    if (meta.filetype === 'media') {
+                        callback(file.url);
+                    }
+
+                    dialogApi.close();
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>

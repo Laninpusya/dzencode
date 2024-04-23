@@ -52,14 +52,13 @@
                                     <td><a href="{{ route('single', ['id' => $main->id]) }}">{{ $main->user_name }}</a></td>
                                     <td>{{ $main->email }}</td>
                                     <td>{{ $main->url }}</td>
-                                    <td style="width: 30%; position: absolute; overflow: hidden; height: 10%">{{ $main->text }}</td>
+                                    <td style="width: 30%; position: absolute; overflow: hidden; height: 10%">{!! $main->text !!}</td>
                                     <td>{{ $main->created_at }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                         {{$mainMessage->links()}}
-
                     </div>
                 </div>
             </div>

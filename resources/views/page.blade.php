@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     @if(!empty($responses))
-                        @foreach($responses->where('parent_message_id', $mainMessage->id) as $item)
+                        @foreach($responses as $item)
                             <div style="margin-left: 20px;" class="card" id="item_{{ $item->id }}">
                                 <div class="card-body" style="margin-left: 20px;">
                                     <p>User Name: {{ $item->user_name }}</p>
@@ -47,11 +47,12 @@
                                     @if(!empty($item->url))
                                     <p>URL: {{ $item->url }}</p>
                                     @endif
-                                    <p>Text: {{ $item->text }}</p>
+                                    <p>Text: {!! $item->text !!}</p>
                                     <p>Date Added: {{ $item->created_at }}</p>
                                     @if(!empty($item->level))
                                         @php
                                             $responseUser = $responses->firstWhere('id', $item->level);
+//                                            dump($responses->firstWhere('id', $item->level))
                                         @endphp
                                         @if(!empty($responseUser))
                                             <p style="background-color: #84d8da">Ответ для: {{ $responseUser->user_name }}</p>
@@ -77,23 +78,34 @@
             <div style="position: absolute; top: 50px; right: 10px;">
                 <div class="form-group">
                     <label for="username">User Name:</label>
-                    <input type="text" class="form-control" id="user_name" name="user_name" required
+                    <input type="text" class="form-control" id="user_name" name="user_name"
                            pattern="[a-zA-Z0-9]+"
-                           title="Только цифры и буквы латинского алфавита">
+                           title="Только цифры и буквы латинского алфавита" value="{{ old('user_name') }}">
+                    @error('user_name')
+                    <p class="text-danger">Заполните поле</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail:</label>
-                    <input type="text" class="form-control" id="email" name="email" required>
+                    <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                    @error('email')
+                    <p class="text-danger">Заполните поле</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="homepage">Home page:</label>
                     <input type="text" class="form-control" id="homepage" name="url">
+
                 </div>
             </div>
             <div>
                 <div class="form-group">
                     <label for="text">Text:</label>
-                    <textarea class="form-control" id="text" name="text" rows="4" required></textarea>
+                    <textarea class="form-control" name="text" id="text" rows="4" placeholder="Введіть text">{{ old('text') }}</textarea>
+
+                    @error('text')
+                    <p class="text-danger">Заполните поле</p>
+                    @enderror
                 </div>
                 <input type="hidden" name="parent_message_id" value="{{ $mainMessage->id }}">
 

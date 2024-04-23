@@ -12,7 +12,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $mainMessage = MainMessage::paginate(25);
+        $mainMessage = MainMessage::orderBy('created_at', 'desc')->paginate(25);
 //        $responses = Response::getResponses();
 //        dd($responses);
 
@@ -25,7 +25,11 @@ class IndexController extends Controller
     public function single($id){
 
         $mainMessage = MainMessage::where('id', $id)->first();
-        $responses = Response::getResponses();
+//        $responses = Response::getResponses();
+        $responses = Response::where('parent_message_id', $id)
+            ->select('text', 'level', 'email', 'id', 'user_name', 'url', 'created_at', 'parent_message_id')
+            ->orderBy('created_at', 'asc')
+            ->paginate(3);
         return view('page', [
             'mainMessage' => $mainMessage,
             'responses' => $responses,

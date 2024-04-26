@@ -22,6 +22,11 @@ class IndexController extends Controller
 //            'responses' => $responses,
         ] );
     }
+    public function main_massage()
+    {
+
+        return view('main_massage');
+    }
     public function single($id){
 
         $mainMessage = MainMessage::where('id', $id)->first();
@@ -68,6 +73,33 @@ class IndexController extends Controller
         }
 
         return redirect()->back()->with('success', 'Комментарий добавлен');
+    }
+    public function main_massage_save(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'user_name' => 'required',
+            'email' => 'required',
+            'text' => 'required',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            DB::table('main_messages')->insertGetId([
+                'user_name' => $validatedData['user_name'],
+                'email' => $validatedData['email'],
+                'text' => $validatedData['text'],
+                'created_at' => Carbon::now(),
+                'url' => $request['url'] ?? null,
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Произошла ошибка при добавлении комментария');
+        }
+
+        return redirect()->route('index')->with('success', 'Комментарий добавлен');
     }
 
 }

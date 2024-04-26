@@ -1,14 +1,21 @@
 @extends('layout')
 
-@section('title', 'гамно')
+@section('title', 'main')
 
 @section('content')
 
     <div class="container">
+        @if(session('success'))
+            <div style="z-index: 99999" class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="container mt-5">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-end">
                     <h5 class="card-title">Head Message</h5>
+                    <a href="{{ route('main-massage') }}" class="btn btn-primary">Создать обсуждение</a>
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -52,7 +59,7 @@
                                     <td><a href="{{ route('single', ['id' => $main->id]) }}">{{ $main->user_name }}</a></td>
                                     <td>{{ $main->email }}</td>
                                     <td>{{ $main->url }}</td>
-                                    <td style="width: 30%; position: absolute; overflow: hidden; height: 10%">{!! $main->text !!}</td>
+                                    <td style="width: 30%; position: absolute; overflow: hidden; max-height: 6%">{!! $main->text !!}</td>
                                     <td>{{ $main->created_at }}</td>
                                 </tr>
                             @endforeach

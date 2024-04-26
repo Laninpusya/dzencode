@@ -39,6 +39,8 @@ Auth::routes();
 Route::get('single/{id}', [App\Http\Controllers\IndexController::class, 'single'])->name('single');
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 Route::post('save/',[App\Http\Controllers\IndexController::class, 'save'])->name('save');
+Route::get('main-massage/hi/',[App\Http\Controllers\IndexController::class, 'main_massage'])->name('main-massage');
+Route::post('main-massage-save/',[App\Http\Controllers\IndexController::class, 'main_massage_save'])->name('main-massage-save');
 Route::get('/sort', [App\Http\Controllers\SortController::class, 'sort'])->name('sort');
 
 

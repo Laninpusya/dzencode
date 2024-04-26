@@ -5,9 +5,9 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container mt-1">
         @if(session('success'))
-            <div class="alert alert-success">
+            <div style="z-index: 99999" class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
@@ -16,11 +16,12 @@
                 {{ session('error') }}
             </div>
         @endif
+
         <form action="{{route('save')}}" method="POST">
             @csrf
             <div class="container mt-5 w-75">
                 <div class="mb-3">
-                    <a href="{{ route('index') }}" class="btn btn-primary">Back</a>
+                    <a href="{{ route('index') }}" class="btn btn-primary">На главную</a>
                 </div>
                 <div class="card">
                     <div class="card-header">
@@ -32,7 +33,7 @@
                             <p>User Name: {{ $mainMessage->user_name }}</p>
                             <p>Email: {{ $mainMessage->email }}</p>
                             <p>URL: {{ $mainMessage->url }}</p>
-                            <p>Text: {{ $mainMessage->text }}</p>
+                            <p>Text: {!! $mainMessage->text !!}</p>
                             <p>Date Added: {{ $mainMessage->created_at }}</p>
                             <input type="radio" id="radio_" name="level" value="">
                             <label for="radio_">Ответить {{ $mainMessage->user_name }}</label>
@@ -40,7 +41,7 @@
                     </div>
                     @if(!empty($responses))
                         @foreach($responses as $item)
-                            <div style="margin-left: 20px;" class="card" id="item_{{ $item->id }}">
+                            <div style="margin-left: 20px;" class="card mt-2" id="item_{{ $item->id }}">
                                 <div class="card-body" style="margin-left: 20px;">
                                     <p>User Name: {{ $item->user_name }}</p>
                                     <p>Email: {{ $item->email }}</p>
@@ -71,23 +72,26 @@
 
                 </div>
             </div>
-
+            @if(auth()->check())
+                @php
+                    $user = auth()->user();
+                @endphp
             <h1>Форма добавления записи</h1>
 
 
-            <div style="position: absolute; top: 50px; right: 10px;">
+            <div style="position: absolute; top: 100px; right: 10px;">
                 <div class="form-group">
                     <label for="username">User Name:</label>
                     <input type="text" class="form-control" id="user_name" name="user_name"
                            pattern="[a-zA-Z0-9]+"
-                           title="Только цифры и буквы латинского алфавита" value="{{ old('user_name') }}">
+                           title="Только цифры и буквы латинского алфавита" value="{{ $user->name }}" readonly>
                     @error('user_name')
                     <p class="text-danger">Заполните поле</p>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail:</label>
-                    <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                    <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}" readonly>
                     @error('email')
                     <p class="text-danger">Заполните поле</p>
                     @enderror
@@ -117,7 +121,11 @@
                 @endif
             </div>
             <button type="submit" class="btn btn-primary">Отправить</button>
+            @else
+                <p class="container mt-1 w-75" style="font-size: x-large">Пожалуйста, <a href="{{ route('login') }}">войдите</a> или <a href="{{ route('register') }}">зарегистрируйтесь</a>, чтобы отправлять сообщения.</p>
+            @endif
         </form>
+
     </div>
 
 @endsection

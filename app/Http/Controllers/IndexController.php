@@ -43,6 +43,10 @@ class IndexController extends Controller
             'email' => 'required',
             'text' => 'required',
             'parent_message_id' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
+        ], [
+            'g-recaptcha-response.required' => 'Пожалуйста, введите капчу.',
+            'g-recaptcha-response.captcha' => 'Неверная капча, пожалуйста, попробуйте еще раз.',
         ]);
 
         DB::beginTransaction();

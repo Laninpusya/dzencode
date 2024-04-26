@@ -102,15 +102,19 @@
                 <div class="form-group">
                     <label for="text">Text:</label>
                     <textarea class="form-control" name="text" id="text" rows="4" placeholder="Введіть text">{{ old('text') }}</textarea>
-
                     @error('text')
                     <p class="text-danger">Заполните поле</p>
                     @enderror
                 </div>
                 <input type="hidden" name="parent_message_id" value="{{ $mainMessage->id }}">
 
-                {{--            {!! NoCaptcha::renderJs() !!}--}}
-                {{--            {!! NoCaptcha::display() !!}--}}
+                            {!! NoCaptcha::renderJs() !!}
+                            {!! NoCaptcha::display() !!}
+                @if ($errors->has('g-recaptcha-response'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('g-recaptcha-response') }}
+                    </div>
+                @endif
             </div>
             <button type="submit" class="btn btn-primary">Отправить</button>
         </form>

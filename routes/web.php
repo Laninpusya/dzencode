@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +20,22 @@ use Illuminate\Support\Facades\Route;
 //Route::get('login/', function () {
 //    return view('auth.login');
 //})->name('login');
-Route::group(['middleware' => 'web'], function () {
-    Route::get('/elfinder', 'ElFinderController@show')->name('elfinder.show');
-    Route::post('/elfinder', 'ElFinderController@connector')->name('elfinder.connector');
-});
 
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'Auth\RegisterController@register');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Auth::routes();
+
+//------------
+//Route::group(['middleware' => 'web'], function () {
+//    Route::get('/elfinder', 'ElFinderController@show')->name('elfinder.show');
+//    Route::post('/elfinder', 'ElFinderController@connector')->name('elfinder.connector');
+//});
+//------------
+//Auth::routes();
 Route::get('single/{id}', [App\Http\Controllers\IndexController::class, 'single'])->name('single');
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
 Route::post('save/',[App\Http\Controllers\IndexController::class, 'save'])->name('save');
@@ -33,3 +45,6 @@ Route::get('/sort', [App\Http\Controllers\SortController::class, 'sort'])->name(
 
 
 
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

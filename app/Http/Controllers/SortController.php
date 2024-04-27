@@ -15,4 +15,14 @@ class SortController extends Controller
         $mainMessage = MainMessage::orderBy($field, $order)->paginate(25);
         return view('index', compact('mainMessage'));
     }
+    public function getFullMessage($id)
+    {
+        $mainMessage = MainMessage::find($id);
+        if ($mainMessage) {
+            return response()->json(['full_text' => $mainMessage->text]);
+        } else {
+            return response()->json(['error' => 'Message not found'], 404);
+        }
+    }
+
 }

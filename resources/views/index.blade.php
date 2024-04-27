@@ -19,6 +19,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -59,12 +60,15 @@
                                     <td><a href="{{ route('single', ['id' => $main->id]) }}">{{ $main->user_name }}</a></td>
                                     <td>{{ $main->email }}</td>
                                     <td>{{ $main->url }}</td>
-                                    <td style="width: 30%; position: absolute; overflow: hidden; max-height: 6%">{!! $main->text !!}</td>
+                                    <td class="main-text" style="width: 30%; position: absolute; overflow: hidden; max-height: 10%" data-message-id="{{ $main->id }}">{!! $main->text !!}</td>
                                     <td>{{ $main->created_at }}</td>
                                 </tr>
                             @endforeach
+
                             </tbody>
                         </table>
+                        <div id="fullMessageContainer" style="display: none; position: sticky"></div>
+
                         {{$mainMessage->links()}}
                     </div>
                 </div>

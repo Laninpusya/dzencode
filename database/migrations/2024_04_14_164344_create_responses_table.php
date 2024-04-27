@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email');
             $table->string('url')->nullable();
             $table->text('text');
-//            $table->integer('level')->default(0);
             $table->unsignedBigInteger('level')->nullable();
             $table->foreign('level')->references('id')->on('responses')->onDelete('cascade');
 

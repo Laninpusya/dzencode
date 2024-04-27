@@ -42,6 +42,7 @@ Route::post('save/',[App\Http\Controllers\IndexController::class, 'save'])->name
 Route::get('main-massage/hi/',[App\Http\Controllers\IndexController::class, 'main_massage'])->name('main-massage');
 Route::post('main-massage-save/',[App\Http\Controllers\IndexController::class, 'main_massage_save'])->name('main-massage-save');
 Route::get('/sort', [App\Http\Controllers\SortController::class, 'sort'])->name('sort');
+Route::get('/get-full-message/{id}', [App\Http\Controllers\SortController::class, 'getFullMessage'])->name('getFullMessage');
 
 
 

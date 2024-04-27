@@ -34,7 +34,7 @@ class IndexController extends Controller
         $responses = Response::where('parent_message_id', $id)
             ->select('text', 'level', 'email', 'id', 'user_name', 'url', 'created_at', 'parent_message_id')
             ->orderBy('created_at', 'asc')
-            ->paginate(3);
+            ->paginate(25);
         return view('page', [
             'mainMessage' => $mainMessage,
             'responses' => $responses,

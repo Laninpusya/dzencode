@@ -28,7 +28,7 @@ class Response extends Model
         return Response::with('mainMessage')
             ->select('text', 'level', 'email', 'id', 'user_name', 'url', 'created_at', 'parent_message_id')
             ->orderBy('created_at', 'asc')
-            ->paginate(2);
+            ->paginate(25);
 
     }
 

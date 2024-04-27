@@ -71,7 +71,9 @@
         /*    border: none;*/
         /*    background: white;*/
         /*}*/
-
+        .main-text{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -172,8 +174,26 @@
                 card.removeClass('border border-primary');
             }
         });
+//предпросмотри сообщения
+        $('table').on('mouseenter', '.main-text', function() {
+            var messageId = $(this).data('message-id');
+            console.log(messageId);
+            $.ajax({
+                url: '{{ route('getFullMessage', ['id' => ':id']) }}'.replace(':id', messageId),
+                type: 'GET',
+                success: function(response) {
+                     $('#fullMessageContainer').html(response.full_text).show();
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }).on('mouseleave', '.main-text', function() {
+            $('#fullMessageContainer').hide();
+        });
 
     });
+
 </script>
 {{--tinymce plugin--}}
 <script>

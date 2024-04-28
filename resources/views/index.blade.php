@@ -60,7 +60,7 @@
                                     <td><a href="{{ route('single', ['id' => $main->id]) }}">{{ $main->user_name }}</a></td>
                                     <td>{{ $main->email }}</td>
                                     <td>{{ $main->url }}</td>
-                                    <td class="main-text" style="width: 30%; position: absolute; overflow: hidden; max-height: 10%" data-message-id="{{ $main->id }}">{!! $main->text !!}</td>
+                                    <td class="main-text" style="width: 30%; position: absolute; overflow: hidden; max-height: 15%" data-message-id="{{ $main->id }}">{!! $main->text !!}</td>
                                     <td>{{ $main->created_at }}</td>
                                 </tr>
                             @endforeach

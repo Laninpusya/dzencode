@@ -6,6 +6,7 @@ use App\Models\MainMessage;
 use App\Models\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
@@ -13,13 +14,9 @@ class IndexController extends Controller
     public function index()
     {
         $mainMessage = MainMessage::orderBy('created_at', 'desc')->paginate(25);
-//        $responses = Response::getResponses();
-//        dd($responses);
-
 
         return view('index', [
             'mainMessage' => $mainMessage,
-//            'responses' => $responses,
         ] );
     }
     public function main_massage()
@@ -29,16 +26,28 @@ class IndexController extends Controller
     }
     public function single($id){
 
+        $cacheKey = 'single_page_' . $id;
+
+        // Проверяем, есть ли данные в кэше
+        if (Cache::has($cacheKey)) {
+            // Если данные есть в кэше, возвращаем их
+            return Cache::get($cacheKey);
+        }
         $mainMessage = MainMessage::where('id', $id)->first();
-//        $responses = Response::getResponses();
         $responses = Response::where('parent_message_id', $id)
             ->select('text', 'level', 'email', 'id', 'user_name', 'url', 'created_at', 'parent_message_id')
             ->orderBy('created_at', 'asc')
             ->paginate(25);
-        return view('page', [
+
+        $cachedData = view('page', [
             'mainMessage' => $mainMessage,
             'responses' => $responses,
-            ]);
+        ])->render();
+
+        Cache::put($cacheKey, $cachedData, now()->addHours(1));
+
+
+        return $cachedData;
     }
 
     public function save(Request $request)

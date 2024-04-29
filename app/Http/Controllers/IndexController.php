@@ -26,33 +26,33 @@ class IndexController extends Controller
     }
     public function single($id){
 
-        $cacheKey = 'single_page_' . $id;
-
-        // Проверяем, есть ли данные в кэше
-        if (Cache::has($cacheKey)) {
-            // Если данные есть в кэше, возвращаем их
-            return Cache::get($cacheKey);
-        }
+//        $cacheKey = 'single_page_' . $id;
+//
+//        // Проверяем, есть ли данные в кэше
+//        if (Cache::has($cacheKey)) {
+//            return Cache::get($cacheKey);
+//        }
         $mainMessage = MainMessage::where('id', $id)->first();
         $responses = Response::where('parent_message_id', $id)
             ->select('text', 'level', 'email', 'id', 'user_name', 'url', 'created_at', 'parent_message_id')
             ->orderBy('created_at', 'asc')
             ->paginate(25);
-
-        $cachedData = view('page', [
+//        $cachedData = view('page', [
+//            'mainMessage' => $mainMessage,
+//            'responses' => $responses,
+//        ])->render();
+//        Cache::put($cacheKey, $cachedData, now()->addHours(1));
+//
+//
+//        return $cachedData;
+        return view('page', [
             'mainMessage' => $mainMessage,
             'responses' => $responses,
-        ])->render();
-
-        Cache::put($cacheKey, $cachedData, now()->addHours(1));
-
-
-        return $cachedData;
+        ]);
     }
 
     public function save(Request $request)
     {
-        dd($request);
         $validatedData = $request->validate([
             'user_name' => 'required',
             'email' => 'required',

@@ -53,7 +53,6 @@
                                     @if(!empty($item->level))
                                         @php
                                             $responseUser = $responses->firstWhere('id', $item->level);
-//                                            dump($responses->firstWhere('id', $item->level))
                                         @endphp
                                         @if(!empty($responseUser))
                                             <p style="background-color: #84d8da">Ответ для: {{ $responseUser->user_name }}</p>
@@ -98,7 +97,7 @@
                 </div>
                 <div class="form-group">
                     <label for="homepage">Home page:</label>
-                    <input type="text" class="form-control" id="homepage" name="url">
+                    <input type="text" class="form-control" id="homepage" name="url" value="{{ old('url') }}">
 
                 </div>
             </div>

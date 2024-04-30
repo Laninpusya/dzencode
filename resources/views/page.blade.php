@@ -75,7 +75,7 @@
                 @php
                     $user = auth()->user();
                 @endphp
-            <h1>Форма добавления записи</h1>
+            <h1>Ваш ответ:</h1>
 
 
             <div style="position: absolute; top: 100px; right: 10px;">
@@ -103,7 +103,6 @@
             </div>
             <div>
                 <div class="form-group">
-                    <label for="text">Text:</label>
                     <textarea class="form-control" name="text" id="text" rows="4" placeholder="Введіть text">{{ old('text') }}</textarea>
                     @error('text')
                     <p class="text-danger">Заполните поле</p>

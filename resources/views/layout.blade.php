@@ -12,7 +12,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfLILopAAAAAJgONSBVUhlAfevKdv-vN9HrAmW5"></script>
-    <script src="https://cdn.tiny.cloud/1/11w3esz6p6q80ht5oc48mdkuk86wavcben7aeejjm4s7w7sw/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/rk8oighjxqwechvfqhm7uzr2988kwuft95r7ufccbf64y1pb/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <link href="/resources/css/colorbox.css" rel="stylesheet">
 
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -31,46 +31,23 @@
             outline: none;
             border: none;
             color: #4abdc0;
-            /*background: white;*/
         }
 
         a:link {
             outline: none;
             color: #4abdc0;
             border: none;
-            /*background: white;*/
         }
-
         a:visited {
             outline: none;
             color: #4abdc0;
             border: none;
-            /*background: white;*/
         }
-
-        /*a:focus {*/
-        /*    outline: none;*/
-        /*    color: black;*/
-        /*    border: none;*/
-        /*    background: white;*/
-        /*}*/
-
         a:hover {
             outline: none;
             color: black;
-
-            /*border: 1px solid;*/
-            /*border-radius: 10px;*/
-            /*background: white;*/
             text-decoration: none;
         }
-
-        /*a:active {*/
-        /*    outline: none;*/
-        /*    color: black;*/
-        /*    border: none;*/
-        /*    background: white;*/
-        /*}*/
         .main-text{
             cursor: pointer;
         }
@@ -151,7 +128,7 @@
                 isFirstClicked = true; // устанавливаем флаг в true
             } else {
                 secondLink.trigger('click'); // эмулируем клик на вторую ссылку
-                isFirstClicked = false; // сбрасываем флаг в false
+                isFirstClicked = false; // устанавливаем флаг в false
             }
         });
         //синяя рамка вокруг активной радио-кнопки
@@ -174,7 +151,7 @@
                 card.removeClass('border border-primary');
             }
         });
-//предпросмотри сообщения
+//предпросмотр сообщения
         $('table').on('mouseenter', '.main-text', function() {
             var messageId = $(this).data('message-id');
             console.log(messageId);
